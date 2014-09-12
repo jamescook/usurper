@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative '../../lib/usurper/csv.rb'
 
 describe Usurper::CSV do
   subject { described_class.new(File.expand_path('spec/fixtures/usurdb.csv')) }
