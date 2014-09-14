@@ -2,7 +2,7 @@ require 'spec_helper'
 require_relative '../../lib/usurper/rates.rb'
 
 describe Usurper::Rates do
-  subject { described_class.new(File.expand_path('spec/fixtures/usurdb.csv')) }
+  subject { described_class.load_from_csv(File.expand_path('spec/fixtures/usurdb.csv')) }
 
   describe '#first' do
     it 'returns the first rate' do
