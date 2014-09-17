@@ -10,9 +10,17 @@ module Usurper
       row_data.each do |key, value|
         rate_info = key.split('/')
         period_number = rate_info[1].sub('period','')
-        attribute = rate_info[2].split(period_number.to_s).last
+        attribute = rate_info[2].split(/period\d/).last
         periods[period_number] ||= {}
-        periods[period_number][attribute] = value
+        if attribute =~ /tier\d/
+          periods[period_number]['tier_data'] ||= {}
+          tier_var = attribute.split(/\d/).last
+          tier_number = attribute[4] # Position of the tier number
+          periods[period_number]['tier_data'][tier_number] ||= {}
+          periods[period_number]['tier_data'][tier_number][tier_var] = value
+        else
+          periods[period_number][attribute] = value
+        end
       end
 
       return periods.map do |key, data|
@@ -21,7 +29,8 @@ module Usurper
                    rate:   data['rate'],
                    adj:    data['adj'],
                    sell:   data['sell'],
-                   unit:   data['unit'])
+                   unit:   data['unit'],
+                   tier_data:  data['tier_data'])
       end
     end
 
