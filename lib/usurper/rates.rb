@@ -3,7 +3,6 @@ require 'json'
 require_relative './csv.rb'
 require_relative './period_energy_cost.rb'
 require_relative './embedded_csv_data.rb'
-require_relative './schedule.rb'
 
 module Usurper
   class Rate
@@ -37,7 +36,8 @@ module Usurper
       data = JSON.parse(row.to_hash['energyweekdayschedule'].gsub(/(\dL)/){ "\"#{$&}\"" })
       schedule = {1 => nil, 2 => nil, 3 => nil, 4 => nil, 5 => nil, 6 => nil, 7 => nil, 8 => nil, 9 => nil, 10 => nil, 11 => nil, 12 => nil}
       data.each_with_index do |month_data, i|
-        schedule[i+1] = month_data.map{|label| label[0].to_i + 1 }
+        #schedule[i+1] = month_data.map{|label| label[0].to_i + 1 }
+        schedule[i+1] = month_data.map{|label| label.to_i + 1 }
       end
 
       schedule
