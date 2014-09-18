@@ -9,13 +9,13 @@ module Usurper
     def process
       row_data.each do |key, value|
         rate_info = key.split('/')
-        period_number = rate_info[1].sub('period','')
+        period_number = rate_info[1].sub('period','').to_i + 1
         attribute = rate_info[2].split(/period\d/).last
         periods[period_number] ||= {}
         if attribute =~ /tier\d/
           periods[period_number]['tier_data'] ||= {}
           tier_var = attribute.split(/\d/).last
-          tier_number = attribute[4] # Position of the tier number
+          tier_number = attribute[4].to_i + 1 # Position of the tier number
           periods[period_number]['tier_data'][tier_number] ||= {}
           periods[period_number]['tier_data'][tier_number][tier_var] = value
         else
