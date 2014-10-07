@@ -7,7 +7,7 @@ require_relative './embedded_csv_data.rb'
 module Usurper
   class Rate
 
-    attr_reader :label, :name, :utility, :start_date, :end_date, :energy_rates, :flat_demand_rates, :demand_rates, :weekday_schedule
+    attr_reader :label, :name, :utility, :start_date, :end_date, :energy_rates, :flat_demand_rates, :demand_rates, :weekday_schedule, :supersedes
 
     def self.load_from_csv_row(row)
       new.tap do |rate|
@@ -25,6 +25,7 @@ module Usurper
       @label             = row['label']
       @start_date        = row['startdate']
       @end_date          = row['enddate']
+      @supersedes        = row['supersedes']
       @energy_rates      = process_energy_rates(row)
       @flat_demand_rates = process_flat_demand_rates(row)
       @demand_rates      = process_demand_rates(row)
